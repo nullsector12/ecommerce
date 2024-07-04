@@ -6,7 +6,7 @@
 
 
 ### ERD
-![e-commerce ERD](https://github.com/nullsector12/ecommerce/blob/master/commerce_erd.png)
+![e-commerce ERD](https://github.com/nullsector12/ecommerce/blob/master/e-commerce%20ERD.png)
 
 ### API 명세서
 [e-commerce API명세서](https://docs.google.com/spreadsheets/d/1JDhCTSviH_lqee0DRvM07r79nLcOu0u1uzkMXx_34ME/edit?usp=sharing)
