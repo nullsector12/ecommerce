@@ -31,4 +31,10 @@ public class ProductController {
 
         return DataResponse.create(fakeProductResponse.productDetailResponseDto);
     }
+
+    @GetMapping("/top-sales")
+    public GenericResponse getTopSalesProductList() {
+
+        return DataResponse.create(fakeProductResponse.topSalesProductList);
+    }
 }
