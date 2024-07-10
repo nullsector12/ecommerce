@@ -1,4 +1,4 @@
-package com.hhplus.assignment.ecommerce.wallet.request.dto;
+package com.hhplus.assignment.ecommerce.wallet.controller.request;
 
 import java.math.BigDecimal;
 

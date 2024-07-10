@@ -28,4 +28,8 @@ public class WalletEntity {
     public void charge(BigDecimal chargeAmount) {
         balance = balance.add(chargeAmount);
     }
+
+    public void useBalance(BigDecimal usedAmount) {
+        balance = balance.subtract(usedAmount);
+    }
 }
