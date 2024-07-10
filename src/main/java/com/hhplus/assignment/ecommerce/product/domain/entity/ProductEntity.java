@@ -1,9 +1,6 @@
 package com.hhplus.assignment.ecommerce.product.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 @Builder
+@Table(name = "`product`")
 public class ProductEntity {
 
     @Id

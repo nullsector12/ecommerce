@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 @Builder
+@Table(name = "wallet")
 public class WalletEntity {
 
     @Id
@@ -23,4 +24,8 @@ public class WalletEntity {
     private Long memberId;
 
     private BigDecimal balance;
+
+    public void charge(BigDecimal chargeAmount) {
+        balance = balance.add(chargeAmount);
+    }
 }
