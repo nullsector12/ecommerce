@@ -1,7 +1,6 @@
-package com.hhplus.assignment.ecommerce.order.response;
+package com.hhplus.assignment.ecommerce.order.controller.response;
 
 import com.hhplus.assignment.ecommerce.common.genericResponse.DataListResponse;
-import com.hhplus.assignment.ecommerce.order.response.dto.OrderResponseDto;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
