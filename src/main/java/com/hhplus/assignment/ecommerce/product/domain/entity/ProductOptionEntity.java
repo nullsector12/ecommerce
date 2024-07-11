@@ -29,4 +29,9 @@ public class ProductOptionEntity {
     private BigDecimal optionPrice;
 
     private Integer stock;
+
+    public ProductOptionEntity payment(int quantity) {
+        this.stock -= quantity;
+        return this;
+    }
 }

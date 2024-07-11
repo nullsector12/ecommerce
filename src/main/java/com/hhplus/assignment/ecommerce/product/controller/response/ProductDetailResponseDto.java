@@ -1,4 +1,4 @@
-package com.hhplus.assignment.ecommerce.product.response.dto;
+package com.hhplus.assignment.ecommerce.product.controller.response;
 
 import com.hhplus.assignment.ecommerce.product.domain.entity.ProductEntity;
 import com.hhplus.assignment.ecommerce.product.domain.entity.ProductOptionEntity;
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record ProductDetailResponseDto(
+public record  ProductDetailResponseDto(
         Long id,
         String name,
         BigDecimal price,

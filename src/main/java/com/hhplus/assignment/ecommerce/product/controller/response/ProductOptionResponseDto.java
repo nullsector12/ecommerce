@@ -1,4 +1,4 @@
-package com.hhplus.assignment.ecommerce.product.response.dto;
+package com.hhplus.assignment.ecommerce.product.controller.response;
 
 import com.hhplus.assignment.ecommerce.product.domain.entity.ProductOptionEntity;
 
