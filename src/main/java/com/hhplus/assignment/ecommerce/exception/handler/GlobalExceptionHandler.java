@@ -2,6 +2,7 @@ package com.hhplus.assignment.ecommerce.exception.handler;
 
 import com.hhplus.assignment.ecommerce.common.genericResponse.ErrorResponse;
 import com.hhplus.assignment.ecommerce.common.model.CommonErrorCode;
+import com.hhplus.assignment.ecommerce.exception.EcommerceException;
 import com.hhplus.assignment.ecommerce.exception.model.ErrorResult;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MissingRequestHeaderException;
@@ -25,6 +27,19 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(EcommerceException.class)
+    public ResponseEntity<ErrorResult> ecommerceException(EcommerceException e) {
+        log.error("EcommerceException, {}", e.getMessage(), e);
+        return ResponseEntity
+                .status(e.getHttpStatus())
+                .body(
+                    ErrorResult.builder()
+                    .code(e.getCode())
+                    .message(e.getMessage())
+                    .build()
+                );
+    }
 
     @ApiResponse(responseCode = "400", description = "잘못된 요청 정보",
             content = @Content(schema = @Schema(implementation = ErrorResponse.class),

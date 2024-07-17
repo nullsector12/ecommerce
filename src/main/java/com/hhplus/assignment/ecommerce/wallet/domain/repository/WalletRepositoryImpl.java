@@ -1,11 +1,9 @@
 package com.hhplus.assignment.ecommerce.wallet.domain.repository;
 
-import com.hhplus.assignment.ecommerce.common.model.CommonErrorCode;
 import com.hhplus.assignment.ecommerce.exception.EcommerceException;
 import com.hhplus.assignment.ecommerce.wallet.domain.entity.WalletEntity;
-import com.hhplus.assignment.ecommerce.wallet.controller.response.WalletResponseDto;
 import com.hhplus.assignment.ecommerce.wallet.domain.jpaRepository.WalletJpaRepository;
-import com.hhplus.assignment.ecommerce.wallet.controller.request.WalletRequestDto;
+import com.hhplus.assignment.ecommerce.wallet.domain.exception.WalletErrorCode;
 import com.hhplus.assignment.ecommerce.wallet.service.dto.ChargeBalanceDto;
 import com.hhplus.assignment.ecommerce.wallet.service.dto.WalletDto;
 import lombok.RequiredArgsConstructor;
@@ -25,30 +23,42 @@ public class WalletRepositoryImpl implements WalletRepository {
     @Override
     public WalletDto findWallet(Long memberId) {
         // 회원 지갑 조회 (없으면 exception)
-        WalletEntity wallet = walletJpaRepository.findById(memberId)
-                .orElseThrow(() -> new EcommerceException(HttpStatus.NOT_FOUND
-                        , CommonErrorCode.NOT_FOUND.getCode(), CommonErrorCode.NOT_FOUND.getMessage()));
+        WalletEntity wallet = walletJpaRepository.findByMemberId(memberId)
+                .orElseThrow(() -> EcommerceException.create(HttpStatus.NOT_FOUND
+                        , WalletErrorCode.NOT_FOUND_MEMBERS_WALLET));
         return new WalletDto(wallet);
     }
 
     @Override
     public WalletDto chargeBalance(ChargeBalanceDto requestDto) {
         // 회원 지갑 조회 (없으면 exception)
-        WalletEntity wallet = walletJpaRepository.findById(requestDto.memberId())
-                .orElseThrow(() -> new EcommerceException(HttpStatus.NOT_FOUND
-                        , CommonErrorCode.NOT_FOUND.getCode(), CommonErrorCode.NOT_FOUND.getMessage()));
+        WalletEntity wallet = walletJpaRepository.findByMemberId(requestDto.memberId())
+                .orElseThrow(() -> EcommerceException.create(HttpStatus.NOT_FOUND
+                        , WalletErrorCode.NOT_FOUND_MEMBERS_WALLET));
         // 지갑 잔액충전
         wallet.charge(requestDto.chargeAmount());
         return new WalletDto(wallet);
     }
 
     @Override
-    public WalletDto useBalance(long walletId, BigDecimal usedAmount) {
+    public void useBalance(long walletId, BigDecimal usedAmount) {
         WalletEntity wallet = walletJpaRepository.findById(walletId)
-                .orElseThrow(() -> new EcommerceException(HttpStatus.NOT_FOUND
-                        , CommonErrorCode.NOT_FOUND.getCode(), CommonErrorCode.NOT_FOUND.getMessage()));
+                .orElseThrow(() -> EcommerceException.create(HttpStatus.NOT_FOUND
+                        , WalletErrorCode.NOT_FOUND_WALLET_ID));
 
         wallet.useBalance(usedAmount);
-        return new WalletDto(wallet);
+    }
+
+    @Override
+    public WalletDto createWallet(Long memberId) {
+        return new WalletDto(walletJpaRepository.save(WalletEntity.builder()
+                .memberId(memberId)
+                .balance(BigDecimal.ZERO)
+                .build()));
+    }
+
+    @Override
+    public void deleteAllWallets() {
+        walletJpaRepository.deleteAll();
     }
 }
