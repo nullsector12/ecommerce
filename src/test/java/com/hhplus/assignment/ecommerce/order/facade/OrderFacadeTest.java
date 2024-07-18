@@ -75,7 +75,7 @@ public class OrderFacadeTest {
                         new BigDecimal(4000), 10));
         OrderRequestDto orderRequestDto =
                 new OrderRequestDto(memberId, productOptionId, quantity, orderPrice);
-        when(productService.updateProductOptionStockForPayment(
+        when(productService.decreaseProductOptionStock(
                 orderRequestDto.productOptionId(), orderRequestDto.quantity())).thenReturn(productOptionPaymentDto);
         // 저장된 주문 정보를 반환
         OrderPaymentResponseDto orderPaymentResponseDto = new OrderPaymentResponseDto(orderEntity, productOptionDetailDto);

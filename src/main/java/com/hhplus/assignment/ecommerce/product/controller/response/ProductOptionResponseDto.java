@@ -1,6 +1,7 @@
 package com.hhplus.assignment.ecommerce.product.controller.response;
 
 import com.hhplus.assignment.ecommerce.product.domain.entity.ProductOptionEntity;
+import com.hhplus.assignment.ecommerce.product.service.command.ProductCommand;
 
 import java.math.BigDecimal;
 
@@ -12,7 +13,8 @@ public record ProductOptionResponseDto(
         Integer stock
 ) {
 
-    public ProductOptionResponseDto(ProductOptionEntity productOptionEntity) {
-        this(productOptionEntity.getId(), productOptionEntity.getProductId(), productOptionEntity.getOption(), productOptionEntity.getOptionPrice(), productOptionEntity.getStock());
+    public ProductOptionResponseDto(ProductCommand.ProductDetailInfo.ProductOptionInfo productOption) {
+        this(productOption.id(), productOption.productId(), productOption.optionName(), productOption.optionPrice()
+                , productOption.stock());
     }
 }

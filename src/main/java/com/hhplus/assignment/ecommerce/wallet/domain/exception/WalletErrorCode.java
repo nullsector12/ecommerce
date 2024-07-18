@@ -8,16 +8,21 @@ public enum WalletErrorCode implements ErrorCode {
     NOT_ENOUGH_BALANCE("WALLET002", "잔액이 부족합니다."),
     ;
 
+    private final String code;
+    private final String message;
+
     WalletErrorCode(String code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
     @Override
     public String getCode() {
-        return "";
+        return code;
     }
 
     @Override
     public String getMessage() {
-        return "";
+        return message;
     }
 }

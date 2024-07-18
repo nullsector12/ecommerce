@@ -12,5 +12,7 @@ public interface ProductOptionRepository {
 
     List<ProductOptionEntity> getProductOptionList(Long productId);
 
-    ProductOptionEntity paymentProductOption(Long productOptionId, int quantity);
+    List<ProductOptionEntity> getProductOptionList(List<Long> productOptionIds);
+
+    void decreaseProductOptionStock(Long productOptionId, int quantity);
 }

@@ -12,6 +12,8 @@ public interface ProductRepository {
     // 상품 상세 조회
     ProductEntity getProductDetail(Long productId);
 
+    String getProductName(Long productId);
+
     // 인기 상품 목록 조회
 //    ProductEntity getTopSalesProductList();
 }

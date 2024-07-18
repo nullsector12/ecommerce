@@ -21,7 +21,7 @@ public class OrderFacadeImpl implements OrderFacade{
     @Override
     public OrderPaymentResponseDto paymentOrder(OrderRequestDto dto) {
 
-        ProductOptionPaymentDto productOptionPaymentDto = productService.updateProductOptionStockForPayment(dto.productOptionId(), dto.quantity());
+        ProductOptionPaymentDto productOptionPaymentDto = productService.decreaseProductOptionStock(dto.productOptionId(), dto.quantity());
         WalletResponseDto wallet = walletService.useBalance(dto.memberId(), dto.orderPrice());
 
         // todo: 외부 데이터플랫폼에 주문정보 전송
