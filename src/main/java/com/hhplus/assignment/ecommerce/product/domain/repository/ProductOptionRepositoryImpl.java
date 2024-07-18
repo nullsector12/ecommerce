@@ -47,4 +47,9 @@ public class ProductOptionRepositoryImpl implements ProductOptionRepository {
 
         productOption.decreaseStock(quantity);
     }
+
+    @Override
+    public List<ProductOptionEntity> createProductOption(List<ProductOptionEntity> productOptionEntity) {
+        return productOptionJpaRepository.saveAll(productOptionEntity);
+    }
 }

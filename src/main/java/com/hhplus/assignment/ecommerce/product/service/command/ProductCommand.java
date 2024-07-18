@@ -1,5 +1,6 @@
 package com.hhplus.assignment.ecommerce.product.service.command;
 
+import com.hhplus.assignment.ecommerce.order.service.command.OrderCommand;
 import com.hhplus.assignment.ecommerce.product.domain.entity.ProductEntity;
 import com.hhplus.assignment.ecommerce.product.domain.entity.ProductOptionEntity;
 
@@ -43,6 +44,22 @@ public class ProductCommand {
                 this(productOption.getId(), productOption.getProductId(), productOption.getOption(), productOption.getOptionPrice()
                         , productOption.getStock());
             }
+        }
+    }
+
+    public record TopSalesProductInfo(
+            Long id,
+            Long totalOrderCount,
+            Long totalQuantity,
+            Long totalOrderAmount,
+            Integer rank
+    ) {
+        public TopSalesProductInfo(ProductDetailInfo productInfo,
+                                   OrderCommand.TopOrderedProduct topRateProduct,
+                                   Integer rank)
+            {
+            this(productInfo.id(), topRateProduct.totalOrderCount(),
+                    topRateProduct.totalQuantity(), topRateProduct.totalOrderAmount(), rank);
         }
     }
 }

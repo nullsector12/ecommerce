@@ -21,18 +21,13 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_option_id")
-    private Long productOptionId;
-
     @Column(name = "member_id")
     private Long memberId;
 
     private String status;
 
-    private Integer quantity;
-
-    @Column(name = "order_price")
-    private BigDecimal orderPrice;
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
 
     @Column(name = "order_at", columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime orderAt;

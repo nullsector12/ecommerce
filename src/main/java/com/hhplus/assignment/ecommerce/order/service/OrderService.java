@@ -1,23 +1,55 @@
 package com.hhplus.assignment.ecommerce.order.service;
 
-import com.hhplus.assignment.ecommerce.order.controller.request.OrderRequestDto;
-import com.hhplus.assignment.ecommerce.order.controller.response.OrderPaymentResponseDto;
-import com.hhplus.assignment.ecommerce.order.controller.response.OrderResponseDto;
-import com.hhplus.assignment.ecommerce.order.service.dto.OrderTopRateDto;
+import com.hhplus.assignment.ecommerce.order.domain.entity.OrderEntity;
+import com.hhplus.assignment.ecommerce.order.domain.entity.OrderItemEntity;
+import com.hhplus.assignment.ecommerce.order.domain.repository.OrderItemRepository;
+import com.hhplus.assignment.ecommerce.order.domain.repository.OrderRepository;
+import com.hhplus.assignment.ecommerce.order.service.command.OrderCommand;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public interface OrderService {
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class OrderService {
 
-    // 주문 목록 조회
-    List<OrderResponseDto> getOrderList(Long memberId);
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
 
-    // 주문 상세 조회
-    OrderResponseDto getOrderDetail(Long orderId);
+    public List<OrderCommand.OrderHistory> getOrderList(Long memberId) {
+        List<OrderCommand.OrderHistory> result = new ArrayList<>();
+        List<OrderEntity> orderEntity = orderRepository.getOrderList(memberId);
+        for(OrderEntity order : orderEntity) {
+            List<OrderItemEntity> orderItemEntities = orderItemRepository.getOrderItemList(order.getId());
+            result.add(new OrderCommand.OrderHistory(order, orderItemEntities));
+        }
+        return result;
+    }
 
-    // 주문
-    OrderPaymentResponseDto saveOrder(OrderRequestDto orderRequestDto);
+    public OrderCommand.OrderHistory getOrderDetail(Long orderId) {
+        OrderEntity orderEntity = orderRepository.getOrderDetail(orderId);
+        List<OrderItemEntity> orderItemEntities = orderItemRepository.getOrderItemList(orderEntity.getId());
+        return new OrderCommand.OrderHistory(orderEntity, orderItemEntities);
+    }
 
-    // 주문 상위 조회
-    List<OrderTopRateDto> getTopRateOrder();
+    @Transactional
+    public OrderCommand.OrderHistory saveOrder(OrderCommand.CreateOrder createOrder) {
+        OrderEntity orderEntity = orderRepository.saveOrder(createOrder);
+        List<OrderItemEntity> orderItemEntities = new ArrayList<>();
+        for(OrderCommand.CreateOrder.CreateOrderItem createOrderItem : createOrder.orderItems()) {
+            orderItemEntities.add(orderItemRepository.saveOrderItem(orderEntity.getId(), createOrderItem));
+        }
+        return null;
+    }
+
+    public List<OrderCommand.TopOrderedProduct> getTopRateOrder() {
+        return orderRepository.getTopRateOrder();
+    }
+
+
 }

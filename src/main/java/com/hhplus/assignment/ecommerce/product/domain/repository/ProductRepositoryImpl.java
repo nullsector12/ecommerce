@@ -35,4 +35,9 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .map(ProductEntity::getName)
                 .orElseThrow(() -> EcommerceException.create(HttpStatus.NOT_FOUND, ProductErrorCode.PRODUCT_NOT_FOUND));
     }
+
+    @Override
+    public List<ProductEntity> createProduct(List<ProductEntity> productEntity) {
+        return productJpaRepository.saveAll(productEntity);
+    }
 }

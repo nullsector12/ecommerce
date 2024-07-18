@@ -1,7 +1,7 @@
 package com.hhplus.assignment.ecommerce.product.controller.response;
 
-import com.hhplus.assignment.ecommerce.order.service.dto.OrderTopRateDto;
-import com.hhplus.assignment.ecommerce.product.service.dto.ProductOptionDetailDto;
+
+import com.hhplus.assignment.ecommerce.product.service.command.ProductCommand;
 
 public record TopSalesProductResponseDto(
         Long productId,
@@ -10,7 +10,9 @@ public record TopSalesProductResponseDto(
         Integer soldQuantity,
         Integer rank
 ) {
-    public TopSalesProductResponseDto(ProductOptionDetailDto product, OrderTopRateDto orderTopRateDto) {
-        this(product.productId(), product.productName(), orderTopRateDto.totalOrderCount(), orderTopRateDto.totalQuantity(), orderTopRateDto.rank());
+    public TopSalesProductResponseDto(ProductCommand.TopSalesProductInfo topSalesProductInfo, String productName) {
+        this(topSalesProductInfo.id(), productName,
+                topSalesProductInfo.totalOrderCount().intValue(), topSalesProductInfo.totalQuantity().intValue(),
+                topSalesProductInfo.rank());
     }
 }

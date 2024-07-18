@@ -14,6 +14,6 @@ public interface ProductRepository {
 
     String getProductName(Long productId);
 
-    // 인기 상품 목록 조회
-//    ProductEntity getTopSalesProductList();
+    // 상품 생성
+    List<ProductEntity> createProduct(List<ProductEntity> productEntity);
 }
