@@ -6,24 +6,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "cart")
-public class CartEntity {
+@Table(name = "cart_item")
+public class CartItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "member_id")
-    private Long memberId;
+    @Column(name = "cart_id")
+    private Long cartId;
 
-    @Column(name = "created_at", columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
-    private LocalDateTime createdAt;
+    @Column(name = "product_option_id")
+    private Long productOptionId;
+
+    private Integer quantity;
 }

@@ -21,3 +21,8 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
         show_sql: true
+
+logging:
+  slack:
+    webhook-url: https://hooks.slack.com/services/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
+  config: classpath:logback-spring.xml
