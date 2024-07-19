@@ -1,6 +1,7 @@
 package com.hhplus.assignment.ecommerce.common.genericResponse;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.hhplus.assignment.ecommerce.exception.model.ErrorCode;
 import com.hhplus.assignment.ecommerce.exception.model.ErrorResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,13 @@ public class ErrorResponse implements GenericResponse {
 
     public static ErrorResponse create(ErrorResult error) {
         return new ErrorResponse(error);
+    }
+
+    public static ErrorResponse create(ErrorCode errorCode) {
+        return new ErrorResponse(ErrorResult.builder()
+            .code(errorCode.getCode())
+            .message(errorCode.getMessage())
+            .build());
     }
 
 }

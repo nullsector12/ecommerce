@@ -1,6 +1,8 @@
 package com.hhplus.assignment.ecommerce.order.facade;
 
+import com.hhplus.assignment.ecommerce.common.genericResponse.ErrorResponse;
 import com.hhplus.assignment.ecommerce.exception.EcommerceException;
+import com.hhplus.assignment.ecommerce.exception.model.ErrorResult;
 import com.hhplus.assignment.ecommerce.order.controller.request.OrderRequestDto;
 import com.hhplus.assignment.ecommerce.order.controller.response.OrderPaymentResponseDto;
 import com.hhplus.assignment.ecommerce.order.controller.response.OrderResponseDto;
@@ -99,11 +101,11 @@ public class OrderFacade {
             // 8. 주문항목/주문 데이터 리턴
             return response;
 
-        } catch (Exception e) {
+        } catch (EcommerceException e) {
             log.error("주문 실패: {}", e.getMessage());
+            throw e;
             // todo: 주문 실패시 rollback 처리?(잔액 복구, 재고 복구)
             // fixme: rollback 처리는 transactional로 처리되잖아
         }
-        return response;
     }
 }

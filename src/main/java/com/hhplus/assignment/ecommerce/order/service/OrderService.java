@@ -44,7 +44,7 @@ public class OrderService {
         for(OrderCommand.CreateOrder.CreateOrderItem createOrderItem : createOrder.orderItems()) {
             orderItemEntities.add(orderItemRepository.saveOrderItem(orderEntity.getId(), createOrderItem));
         }
-        return null;
+        return new OrderCommand.OrderHistory(orderEntity, orderItemEntities);
     }
 
     public List<OrderCommand.TopOrderedProduct> getTopRateOrder() {
