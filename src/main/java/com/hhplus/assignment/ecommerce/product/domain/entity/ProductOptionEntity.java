@@ -1,5 +1,6 @@
 package com.hhplus.assignment.ecommerce.product.domain.entity;
 
+import com.hhplus.assignment.ecommerce.exception.EcommerceException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,8 +31,7 @@ public class ProductOptionEntity {
 
     private Integer stock;
 
-    public ProductOptionEntity payment(int quantity) {
+    public void decreaseStock(int quantity) {
         this.stock -= quantity;
-        return this;
     }
 }

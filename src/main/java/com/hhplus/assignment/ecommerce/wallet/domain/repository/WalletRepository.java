@@ -13,5 +13,13 @@ public interface WalletRepository {
     // 잔액 충전
     WalletDto chargeBalance(ChargeBalanceDto requestDto);
 
-    WalletDto useBalance(long walletId, BigDecimal usedAmount);
+    // 잔액 사용
+    void useBalance(long walletId, BigDecimal usedAmount);
+
+    // 회원 지갑 생성
+    WalletDto createWallet(Long memberId);
+
+    // 회원 지갑 전체 삭제
+    void deleteAllWallets();
+
 }

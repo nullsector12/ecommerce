@@ -13,7 +13,7 @@ public record CartResponseDto(
         Integer price,
         LocalDateTime createdAt
 ) {
-    public CartResponseDto(CartEntity cartEntity, String productName, String productOptionName, Integer price) {
-        this(cartEntity.getMemberId(), cartEntity.getProductOptionId(), productName, productOptionName, cartEntity.getQuantity(), cartEntity.getQuantity()*price, cartEntity.getCreatedAt());
-    }
+//    public CartResponseDto(CartEntity cartEntity, String productName, String productOptionName, Integer price) {
+//        this(cartEntity.getMemberId(), cartEntity.getProductOptionId(), productName, productOptionName, cartEntity.getQuantity(), cartEntity.getQuantity()*price, cartEntity.getCreatedAt());
+//    }
 }

@@ -1,27 +1,45 @@
 package com.hhplus.assignment.ecommerce.product.service;
 
-import com.hhplus.assignment.ecommerce.product.controller.response.ProductDetailResponseDto;
-import com.hhplus.assignment.ecommerce.product.controller.response.ProductOptionResponseDto;
-import com.hhplus.assignment.ecommerce.product.controller.response.ProductResponseDto;
-import com.hhplus.assignment.ecommerce.product.controller.response.TopSalesProductResponseDto;
-import com.hhplus.assignment.ecommerce.product.service.dto.ProductOptionDetailDto;
-import com.hhplus.assignment.ecommerce.product.service.dto.ProductOptionPaymentDto;
+import com.hhplus.assignment.ecommerce.product.domain.entity.ProductEntity;
+import com.hhplus.assignment.ecommerce.product.domain.repository.ProductOptionRepository;
+import com.hhplus.assignment.ecommerce.product.domain.repository.ProductRepository;
+import com.hhplus.assignment.ecommerce.product.service.command.ProductCommand;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface ProductService {
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ProductService {
 
-    // 상품 목록 조회
-    List<ProductResponseDto> getProductList();
+    private final ProductRepository productRepository;
+    private final ProductOptionRepository productOptionRepository;
 
-    // 상품 상세 조회
-    ProductDetailResponseDto getProductDetail(Long productId);
+    public List<ProductCommand.ProductInfo> getProductList() {
+        List<ProductEntity> productList = productRepository.getProductList();
+        return productList.stream().map(product -> new ProductCommand.ProductInfo(product, productOptionRepository.isSoldOut(product.getId()))).toList();
+    }
 
-    // 상품옵션 상세조회
-    ProductOptionDetailDto getProductOptionDetail(Long productOptionId);
+    public ProductCommand.ProductDetailInfo getProductDetail(Long productId) {
+        ProductEntity product = productRepository.getProductDetail(productId);
 
-    // 상품 주문
-    ProductOptionPaymentDto updateProductOptionStockForPayment(Long productOptionId, Integer quantity);
+        return new ProductCommand.ProductDetailInfo(product, productOptionRepository.getProductOptionList(productId));
+    }
 
+    public List<ProductCommand.ProductDetailInfo.ProductOptionInfo> getProductOptionList(List<Long> productOptionIds) {
+        return productOptionRepository.getProductOptionList(productOptionIds).stream().map(ProductCommand.ProductDetailInfo.ProductOptionInfo::new).toList();
+    }
 
+    @Transactional
+    public void decreaseProductOptionStock(Long productOptionId, Integer quantity) {
+        productOptionRepository.decreaseProductOptionStock(productOptionId, quantity);
+    }
+
+    public String getProductName(Long productId) {
+        return productRepository.getProductName(productId);
+    }
 }

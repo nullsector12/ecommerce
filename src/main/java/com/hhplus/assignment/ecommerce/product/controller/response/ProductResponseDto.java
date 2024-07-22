@@ -1,6 +1,7 @@
 package com.hhplus.assignment.ecommerce.product.controller.response;
 
 import com.hhplus.assignment.ecommerce.product.domain.entity.ProductEntity;
+import com.hhplus.assignment.ecommerce.product.service.command.ProductCommand;
 
 import java.math.BigDecimal;
 
@@ -11,7 +12,7 @@ public record ProductResponseDto(
         boolean soldOut
 ) {
 
-    public ProductResponseDto(ProductEntity productEntity, boolean soldOut) {
-        this(productEntity.getId(), productEntity.getName(), productEntity.getPrice(), soldOut);
+    public ProductResponseDto(ProductCommand.ProductInfo productInfo) {
+        this(productInfo.id(), productInfo.name(), productInfo.price(), productInfo.isSoldOut());
     }
 }

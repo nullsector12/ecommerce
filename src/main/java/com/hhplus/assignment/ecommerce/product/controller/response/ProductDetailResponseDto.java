@@ -2,6 +2,7 @@ package com.hhplus.assignment.ecommerce.product.controller.response;
 
 import com.hhplus.assignment.ecommerce.product.domain.entity.ProductEntity;
 import com.hhplus.assignment.ecommerce.product.domain.entity.ProductOptionEntity;
+import com.hhplus.assignment.ecommerce.product.service.command.ProductCommand;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,9 +15,8 @@ public record  ProductDetailResponseDto(
         List<ProductOptionResponseDto> options
 ) {
 
-    public ProductDetailResponseDto(ProductEntity productEntity, List<ProductOptionEntity> productOptionEntities) {
-        this(productEntity.getId(), productEntity.getName(), productEntity.getPrice(), productOptionEntities.stream()
-                .map(ProductOptionResponseDto::new)
-                .collect(Collectors.toList()));
+    public ProductDetailResponseDto(ProductCommand.ProductDetailInfo productDetailInfo) {
+        this(productDetailInfo.id(), productDetailInfo.name(), productDetailInfo.price(),
+                productDetailInfo.options().stream().map(ProductOptionResponseDto::new).collect(Collectors.toList()));
     }
 }

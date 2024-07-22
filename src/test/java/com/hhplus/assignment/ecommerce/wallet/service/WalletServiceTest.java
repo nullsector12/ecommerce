@@ -1,5 +1,6 @@
 package com.hhplus.assignment.ecommerce.wallet.service;
 
+import com.hhplus.assignment.ecommerce.exception.EcommerceException;
 import com.hhplus.assignment.ecommerce.wallet.controller.request.WalletRequestDto;
 import com.hhplus.assignment.ecommerce.wallet.domain.repository.WalletRepository;
 import com.hhplus.assignment.ecommerce.wallet.controller.response.WalletResponseDto;
@@ -16,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,7 +27,7 @@ public class WalletServiceTest {
     private WalletRepository walletRepository;
 
     @InjectMocks
-    private WalletServiceImpl walletServiceImpl;
+    private WalletService walletService;
 
     private WalletDto walletDto;
     private WalletRequestDto walletRequestDto;
@@ -37,13 +39,26 @@ public class WalletServiceTest {
     }
 
     @Test
+    @DisplayName("회원 잔액사용 테스트 - 잔액부족 예외 처리")
+    void useBalance() {
+        // given
+        long walletId = 1L;
+        BigDecimal usedAmount = new BigDecimal(1500);
+        WalletDto walletDto = new WalletDto(walletId, 1L, new BigDecimal(1000));
+        when(walletRepository.findWallet(walletId)).thenReturn(walletDto);
+
+        // when/then
+        assertThrows(EcommerceException.class, () -> walletService.useBalance(walletId, usedAmount));
+    }
+
+    @Test
     @DisplayName("회원 잔액확인 테스트")
     void getBalance() {
         // given
         when(walletRepository.findWallet(1L)).thenReturn(walletDto);
 
         // when
-        WalletResponseDto response = walletServiceImpl.getWallet(1L);
+        WalletResponseDto response = walletService.getWallet(1L);
 
         // then
         assertEquals(response.walletId(), walletDto.walletId());
@@ -61,7 +76,7 @@ public class WalletServiceTest {
         when(walletRepository.chargeBalance(chargeBalanceDto)).thenReturn(walletDtoResult);
 
         // when
-        WalletResponseDto response = walletServiceImpl.chargeBalance(walletRequestDto);
+        WalletResponseDto response = walletService.chargeBalance(walletRequestDto);
 
         // then
         assertEquals(response, new WalletResponseDto(walletDtoResult));

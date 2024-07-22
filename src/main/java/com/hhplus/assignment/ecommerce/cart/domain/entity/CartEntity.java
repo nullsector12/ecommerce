@@ -24,16 +24,6 @@ public class CartEntity {
     @Column(name = "member_id")
     private Long memberId;
 
-    @Column(name = "product_option_id")
-    private Long productOptionId;
-
-    private Integer quantity;
-
-    private String status;
-
     @Column(name = "created_at", columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)")
-    private LocalDateTime updatedAt;
 }

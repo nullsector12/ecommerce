@@ -1,11 +1,22 @@
 package com.hhplus.assignment.ecommerce.order.controller.request;
 
-import java.math.BigDecimal;
+import lombok.Builder;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+@Builder
 public record OrderRequestDto(
         Long memberId,
-        Long productOptionId,
-        Integer quantity,
+        List<OrderItemRequestDto> orderItemRequestDtos,
         BigDecimal orderPrice
 ) {
+
+    @Builder
+    public record OrderItemRequestDto(
+            Long productOptionId,
+            Integer quantity
+    ) {
+
+    }
 }
