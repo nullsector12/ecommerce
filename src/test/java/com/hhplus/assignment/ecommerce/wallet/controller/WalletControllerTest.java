@@ -1,9 +1,11 @@
 package com.hhplus.assignment.ecommerce.wallet.controller;
 
 import com.hhplus.assignment.ecommerce.exception.EcommerceException;
+import com.hhplus.assignment.ecommerce.wallet.controller.request.WalletRequestDto;
 import com.hhplus.assignment.ecommerce.wallet.controller.response.WalletResponseDto;
 import com.hhplus.assignment.ecommerce.wallet.domain.repository.WalletRepository;
 import com.hhplus.assignment.ecommerce.wallet.domain.exception.WalletErrorCode;
+import com.hhplus.assignment.ecommerce.wallet.service.dto.WalletDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +16,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.math.BigDecimal;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -70,6 +77,4 @@ public class WalletControllerTest {
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
-
-
 }

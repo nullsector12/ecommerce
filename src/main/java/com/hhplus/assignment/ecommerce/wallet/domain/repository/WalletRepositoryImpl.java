@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -30,9 +31,10 @@ public class WalletRepositoryImpl implements WalletRepository {
     }
 
     @Override
+    @Transactional
     public WalletDto chargeBalance(ChargeBalanceDto requestDto) {
         // 회원 지갑 조회 (없으면 exception)
-        WalletEntity wallet = walletJpaRepository.findByMemberId(requestDto.memberId())
+        WalletEntity wallet = walletJpaRepository.findByMemberIdForUpdate(requestDto.memberId())
                 .orElseThrow(() -> EcommerceException.create(HttpStatus.NOT_FOUND
                         , WalletErrorCode.NOT_FOUND_MEMBERS_WALLET));
         // 지갑 잔액충전

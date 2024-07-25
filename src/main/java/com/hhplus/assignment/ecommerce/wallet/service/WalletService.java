@@ -7,6 +7,7 @@ import com.hhplus.assignment.ecommerce.wallet.service.dto.ChargeBalanceDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ public class WalletService {
     private final WalletRepository walletRepository;
 
     // 잔액 충전
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public WalletResponseDto chargeBalance(WalletRequestDto requestDto) {
         return new WalletResponseDto(walletRepository.chargeBalance(new ChargeBalanceDto(requestDto)));
     }

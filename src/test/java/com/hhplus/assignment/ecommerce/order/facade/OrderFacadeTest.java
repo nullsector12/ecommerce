@@ -97,7 +97,7 @@ public class OrderFacadeTest {
                 )
         );
 
-        when(productService.getProductOptionList(List.of(productOptionId))).thenReturn(productOptionInfos);
+        when(productService.getProductOptionListForUpdate(List.of(productOptionId))).thenReturn(productOptionInfos);
 
         // when
         OrderPaymentResponseDto result = orderFacade.paymentOrder(orderRequestDto);

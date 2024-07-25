@@ -9,6 +9,7 @@ import com.hhplus.assignment.ecommerce.product.service.ProductService;
 import com.hhplus.assignment.ecommerce.product.service.command.ProductCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class ProductFacade {
         return productService.getProductList().stream().map(ProductResponseDto::new).toList();
     }
 
+    @Transactional
     public ProductDetailResponseDto getProductDetail(Long productId) {
         return new ProductDetailResponseDto(productService.getProductDetail(productId));
     }

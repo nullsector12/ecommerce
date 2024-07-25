@@ -50,7 +50,7 @@ public class WalletController {
                     ),
             })
     // 잔액 충전
-    @PatchMapping
+    @PatchMapping("")
     public GenericResponse chargeBalance(@RequestBody WalletRequestDto requestDto) {
 
         return DataResponse.create(walletService.chargeBalance(requestDto));

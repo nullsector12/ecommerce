@@ -7,6 +7,7 @@ import com.hhplus.assignment.ecommerce.product.service.command.ProductCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -30,8 +31,14 @@ public class ProductService {
         return new ProductCommand.ProductDetailInfo(product, productOptionRepository.getProductOptionList(productId));
     }
 
+    @Transactional
     public List<ProductCommand.ProductDetailInfo.ProductOptionInfo> getProductOptionList(List<Long> productOptionIds) {
         return productOptionRepository.getProductOptionList(productOptionIds).stream().map(ProductCommand.ProductDetailInfo.ProductOptionInfo::new).toList();
+    }
+
+    @Transactional
+    public List<ProductCommand.ProductDetailInfo.ProductOptionInfo> getProductOptionListForUpdate(List<Long> productOptionIds) {
+        return productOptionRepository.getProductOptionListForUpdate(productOptionIds).stream().map(ProductCommand.ProductDetailInfo.ProductOptionInfo::new).toList();
     }
 
     @Transactional

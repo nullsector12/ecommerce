@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,26 +39,18 @@ public class OrderFacade {
         return new OrderResponseDto(orderService.getOrderDetail(orderId));
     }
 
+    @Transactional
     public OrderPaymentResponseDto paymentOrder(OrderRequestDto dto) throws EcommerceException {
 
         OrderPaymentResponseDto response = null;
 
         try {
-            // 1. 회원 잔액 가져오기
-            WalletResponseDto wallet = walletService.getWallet(dto.memberId());
-
-            // 2. 잔액과 총 주문금액 비교
-            if(wallet.balance().compareTo(dto.orderPrice()) < 0) {
-                log.error("잔액 부족. memberId: {}, balance: {}, orderPrice: {}", dto.memberId(), wallet.balance(), dto.orderPrice());
-                throw EcommerceException.create(HttpStatus.BAD_REQUEST, OrderErrorCode.NOT_ENOUGH_MEMBER_BALANCE);
-            }
-
-            // 3. 상품 옵션 리스트 가져오기
+            // 1. 상품 옵션 리스트 가져오기
             List<ProductCommand.ProductDetailInfo.ProductOptionInfo> productOptionInfos =
-                    productService.getProductOptionList(dto.orderItemRequestDtos()
+                    productService.getProductOptionListForUpdate(dto.orderItemRequestDtos()
                             .stream().map(OrderRequestDto.OrderItemRequestDto::productOptionId).toList());
 
-            // 4. 주문량과 재고 비교 및 재고 차감
+            // 2. 주문량과 재고 비교 및 재고 차감
             for(OrderRequestDto.OrderItemRequestDto item : dto.orderItemRequestDtos()) {
                 ProductCommand.ProductDetailInfo.ProductOptionInfo productOptionInfo = productOptionInfos.stream()
                         .filter(info -> info.id().equals(item.productOptionId()))
@@ -69,6 +62,15 @@ public class OrderFacade {
                     throw EcommerceException.create(HttpStatus.BAD_REQUEST, OrderErrorCode.ORDER_ITEM_STOCK_NOT_ENOUGH);
                 }
                 productService.decreaseProductOptionStock(item.productOptionId(), item.quantity());
+            }
+
+            // 3. 회원 잔액 가져오기
+            WalletResponseDto wallet = walletService.getWallet(dto.memberId());
+
+            // 4. 잔액과 총 주문금액 비교
+            if(wallet.balance().compareTo(dto.orderPrice()) < 0) {
+                log.error("잔액 부족. memberId: {}, balance: {}, orderPrice: {}", dto.memberId(), wallet.balance(), dto.orderPrice());
+                throw EcommerceException.create(HttpStatus.BAD_REQUEST, OrderErrorCode.NOT_ENOUGH_MEMBER_BALANCE);
             }
 
             // 5. 회원 잔액 차감

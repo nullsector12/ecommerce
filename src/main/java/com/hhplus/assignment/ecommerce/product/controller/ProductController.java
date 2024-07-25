@@ -6,7 +6,6 @@ import com.hhplus.assignment.ecommerce.product.controller.response.ProductDetail
 import com.hhplus.assignment.ecommerce.product.controller.response.ProductListResponse;
 import com.hhplus.assignment.ecommerce.product.controller.response.TopSalesProductListResponse;
 import com.hhplus.assignment.ecommerce.product.facede.ProductFacade;
-import com.hhplus.assignment.ecommerce.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
