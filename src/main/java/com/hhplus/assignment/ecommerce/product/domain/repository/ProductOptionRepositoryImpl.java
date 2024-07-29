@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,6 +39,11 @@ public class ProductOptionRepositoryImpl implements ProductOptionRepository {
     @Override
     public List<ProductOptionEntity> getProductOptionList(List<Long> productOptionIds) {
         return productOptionJpaRepository.findAllByIdIn(productOptionIds);
+    }
+
+    @Override
+    public List<ProductOptionEntity> getProductOptionListForUpdate(List<Long> productOptionIds) {
+        return productOptionJpaRepository.findAllByIdInForUpdate(productOptionIds);
     }
 
     @Override

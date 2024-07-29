@@ -5,7 +5,7 @@ spring:
   application.name: ecommerce
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:lecture;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;MODE=MySQL;
+    url: jdbc:h2:mem:lecture;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;MODE=MySQL;LOCK_TIMEOUT=5000
     username: username
     password: password
   h2:
@@ -26,3 +26,9 @@ logging:
   slack:
     webhook-url: https://hooks.slack.com/services/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
   config: classpath:logback-spring.xml
+  level:
+    org:
+      springframework:
+        transaction:
+          interceptor: trace
+    root: debug
