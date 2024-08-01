@@ -49,8 +49,7 @@
 ## 챕터 3. STEP 11/12 동시성 제어
 ### [동시성 제어 과제링크](https://velog.io/@nullsector/%ED%95%AD%ED%95%B4%ED%94%8C%EB%9F%AC%EC%8A%A4-%EB%B0%B1%EC%97%94%EB%93%9C-5%EA%B8%B0-Chapter3.-%EB%8B%A4%EC%96%91%ED%95%9C-%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0%EB%B2%95-%EC%8B%9C%EB%8F%84)
 
-<details><summary> 챕터 3. STEP 13/14 적은 부하로 트래픽 처리
-</summary>
+### <details> <summary> 챕터 3. STEP 13/14 적은 부하로 트래픽 처리 </summary>
 
 이커머스 에서 대량의 트래픽 발생 시 지연이 발생할 수 있는 조회 쿼리 파악
 -
