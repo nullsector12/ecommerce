@@ -82,17 +82,17 @@
 
     먼저 캐싱처리 하지 않은 상태에서 순차적으로 100회간 해당 메소드를 부르도록 테스트했다.
     
-![이미지](https://github.com/nullsector12/ecommerce/blob/step-013-014/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044640.png)
+![이미지](https://github.com/nullsector12/ecommerce/blob/master/image/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044640.png)
 
-![이미지](https://github.com/nullsector12/ecommerce/blob/step-013-014/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044526.png)
+![이미지](https://github.com/nullsector12/ecommerce/blob/master/image/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044526.png)
 
- ![결과](https://github.com/nullsector12/ecommerce/blob/step-013-014/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044454.png)
+ ![결과](https://github.com/nullsector12/ecommerce/blob/master/image/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044454.png)
 
     다음 캐싱처리 후 동일하게 순차적으로 100회간 해당 메소드를 부르도록 테스트했다.
 
-![이미지](https://github.com/nullsector12/ecommerce/blob/step-013-014/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044555.png)
+![이미지](https://github.com/nullsector12/ecommerce/blob/master/image/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044555.png)
 
-![결과](https://github.com/nullsector12/ecommerce/blob/step-013-014/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044622.png)
+![결과](https://github.com/nullsector12/ecommerce/blob/master/image/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202024-08-02%20044622.png)
 
     비교결과 캐싱처리X : 17606ms <-> 캐싱처리o : 325ms 로 약 54배 빠른 결과가 나타났다.
 
