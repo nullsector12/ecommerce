@@ -38,7 +38,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public List<OrderCommand.TopOrderedProduct> getTopRateOrder() {
-        return orderJpaRepository.findTopOrderProduct(LocalDateTime.now().minusDays(3)).stream()
+        return orderJpaRepository.findTopOrderProduct().stream()
                 .map(OrderCommand.TopOrderedProduct::new).toList();
     }
 }

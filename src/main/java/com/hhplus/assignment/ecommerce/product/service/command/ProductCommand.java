@@ -41,7 +41,7 @@ public class ProductCommand {
                 Integer stock
         ) {
             public ProductOptionInfo(ProductOptionEntity productOption){
-                this(productOption.getId(), productOption.getProductId(), productOption.getOption(), productOption.getOptionPrice()
+                this(productOption.getId(), productOption.getProductId(), productOption.getOptionName(), productOption.getOptionPrice()
                         , productOption.getStock());
             }
         }
