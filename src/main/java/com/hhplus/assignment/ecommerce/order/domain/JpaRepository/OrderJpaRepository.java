@@ -14,10 +14,11 @@ public interface OrderJpaRepository extends JpaRepository<OrderEntity, Long> {
 
     @Query(value = """
             select oi.product_id, sum(oi.quantity) as totalQuantity, count(oi.product_id) as totalOrderCount, sum(oi.quantity * oi.product_option_price) as totalOrderAmount 
-            from "order" o join order_item oi 
+            from orders o join order_item oi 
                 on o.id = oi.order_id  
+            where now() >= order_at and order_at >= date_add(now(), Interval -3 day)
             group by oi.product_id 
             order by sum(oi.quantity) desc 
             limit 5""", nativeQuery = true)
-    List<TopOrderedProductInterface> findTopOrderProduct(@Param("orderAt") LocalDateTime orderAt);
+    List<TopOrderedProductInterface> findTopOrderProduct();
 }

@@ -60,44 +60,6 @@ public class ProductIntegrationTest {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    @BeforeEach
-    void setUp() {
-        productRepository.createProduct(List.of(
-                ProductEntity.builder().name("상품1").price(new BigDecimal(1000)).build(),
-                ProductEntity.builder().name("상품2").price(new BigDecimal(1000)).build(),
-                ProductEntity.builder().name("상품3").price(new BigDecimal(1000)).build(),
-                ProductEntity.builder().name("상품4").price(new BigDecimal(1000)).build(),
-                ProductEntity.builder().name("상품5").price(new BigDecimal(1000)).build()
-        ));
-
-        productOptionRepository.createProductOption(List.of(
-                ProductOptionEntity.builder().productId(1L).option("상품1 옵션1").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(1L).option("상품1 옵션2").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(2L).option("상품2 옵션1").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(2L).option("상품2 옵션2").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(3L).option("상품3 옵션1").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(3L).option("상품3 옵션2").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(3L).option("상품3 옵션3").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(4L).option("상품4 옵션1").optionPrice(new BigDecimal(1000)).stock(0).build(),
-                ProductOptionEntity.builder().productId(4L).option("상품4 옵션2").optionPrice(new BigDecimal(1000)).stock(0).build(),
-                ProductOptionEntity.builder().productId(5L).option("상품5 옵션1").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(5L).option("상품5 옵션2").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(5L).option("상품5 옵션3").optionPrice(new BigDecimal(1000)).stock(10).build(),
-                ProductOptionEntity.builder().productId(5L).option("상품5 옵션4").optionPrice(new BigDecimal(1000)).stock(10).build()
-        ));
-
-        OrderEntity orderEntity1 = orderRepository.saveOrder(OrderCommand.CreateOrder.builder().memberId(1L).totalPrice(new BigDecimal(100000)).build());
-        OrderEntity orderEntity2 = orderRepository.saveOrder(OrderCommand.CreateOrder.builder().memberId(2L).totalPrice(new BigDecimal(5000)).build());
-
-        orderItemRepository.saveOrderItem(orderEntity1.getId(), OrderCommand.CreateOrder.CreateOrderItem.builder().productId(1L).productOptionId(1L).productName("상품1").productOptionName("상품1 옵션1").productOptionPrice(new BigDecimal(1000)).quantity(1).build());
-        orderItemRepository.saveOrderItem(orderEntity1.getId(), OrderCommand.CreateOrder.CreateOrderItem.builder().productId(2L).productOptionId(3L).productName("상품2").productOptionName("상품2 옵션1").productOptionPrice(new BigDecimal(1000)).quantity(1).build());
-        orderItemRepository.saveOrderItem(orderEntity1.getId(), OrderCommand.CreateOrder.CreateOrderItem.builder().productId(2L).productOptionId(4L).productName("상품2").productOptionName("상품2 옵션2").productOptionPrice(new BigDecimal(1000)).quantity(2).build());
-        orderItemRepository.saveOrderItem(orderEntity1.getId(), OrderCommand.CreateOrder.CreateOrderItem.builder().productId(5L).productOptionId(13L).productName("상품5").productOptionName("상품5 옵션4").productOptionPrice(new BigDecimal(1000)).quantity(5).build());
-        orderItemRepository.saveOrderItem(orderEntity2.getId(), OrderCommand.CreateOrder.CreateOrderItem.builder().productId(3L).productOptionId(5L).productName("상품3").productOptionName("상품3 옵션1").productOptionPrice(new BigDecimal(1000)).quantity(2).build());
-        orderItemRepository.saveOrderItem(orderEntity2.getId(), OrderCommand.CreateOrder.CreateOrderItem.builder().productId(1L).productOptionId(1L).productName("상품1").productOptionName("상품1 옵션1").productOptionPrice(new BigDecimal(1000)).quantity(12).build());
-        orderItemRepository.saveOrderItem(orderEntity2.getId(), OrderCommand.CreateOrder.CreateOrderItem.builder().productId(4L).productOptionId(9L).productName("상품4").productOptionName("상품4 옵션2").productOptionPrice(new BigDecimal(1000)).quantity(20).build());
-    }
-
     @Test
     @DisplayName("상품 목록 조회")
     void getProductList() throws Exception {

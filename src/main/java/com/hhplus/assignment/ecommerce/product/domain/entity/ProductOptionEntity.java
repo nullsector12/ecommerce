@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "product_option")
+@Table(name = "product_option", schema = "hh_plus")
 public class ProductOptionEntity {
 
     @Id
@@ -24,7 +24,8 @@ public class ProductOptionEntity {
     @Column(name = "product_id")
     private Long productId;
 
-    private String option;
+    @Column(name = "option_name")
+    private String optionName;
 
     @Column(name = "option_price")
     private BigDecimal optionPrice;
