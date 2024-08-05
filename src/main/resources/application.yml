@@ -5,13 +5,18 @@ spring:
   application.name: ecommerce
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hh_plus?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/hh_plus?useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Seoul
     username: root
     password: password
     hikari:
       maximum-pool-size: 30
       minimum-idle: 30
       pool-name: hh-plus-local
+
+  jpa:
+    properties:
+      hibernate:
+    open-in-view: false
 
 logging:
   slack:
@@ -22,4 +27,3 @@ logging:
       springframework:
         transaction:
           interceptor: trace
-    root: debug

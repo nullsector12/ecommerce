@@ -8,6 +8,7 @@ import com.hhplus.assignment.ecommerce.product.controller.response.TopSalesProdu
 import com.hhplus.assignment.ecommerce.product.service.ProductService;
 import com.hhplus.assignment.ecommerce.product.service.command.ProductCommand;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,7 @@ public class ProductFacade {
         return new ProductDetailResponseDto(productService.getProductDetail(productId));
     }
 
+    @Cacheable(cacheNames = "top-sales-product", key = "#root.methodName")
     public List<TopSalesProductResponseDto> getTopSalesProductList() {
         List<ProductCommand.TopSalesProductInfo> topSalesProductList = new ArrayList<>();
         List<OrderCommand.TopOrderedProduct> topRateOrder = orderService.getTopRateOrder();
